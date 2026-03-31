@@ -1,0 +1,20 @@
+name: 'elt_project'
+version: '1.0.0'
+profile: 'elt_project'
+
+model-paths:  ["models"]
+macro-paths:  ["macros"]
+test-paths:   ["tests"]
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  elt_project:
+    staging:
+      +schema:       staging
+      +materialized: view
+      +tags:         ["staging"]
+
+    marts:
+      +schema:       mart
+      +materialized: table
+      +tags:         ["marts"]

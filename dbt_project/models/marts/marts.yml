@@ -1,0 +1,97 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: "Customer dimension table with cleaned attributes"
+    columns:
+      - name: customer_id
+        description: "Unique customer identifier"
+        tests:
+          - not_null
+          - unique
+
+      - name: email
+        description: "Normalised customer email"
+        tests:
+          - not_null
+          - unique
+
+      - name: country
+        description: "Customer country"
+        tests:
+          - not_null
+
+  - name: dim_products
+    description: "Product dimension table with cleaned attributes"
+    columns:
+      - name: product_id
+        description: "Unique product identifier"
+        tests:
+          - not_null
+          - unique
+
+      - name: price
+        description: "Product price"
+        tests:
+          - not_null
+          - positive_value
+
+      - name: category
+        description: "Product category"
+        tests:
+          - not_null
+
+  - name: fact_orders
+    description: "Fact table containing order line items with amounts"
+    columns:
+      - name: order_id
+        description: "Order identifier"
+        tests:
+          - not_null
+
+      - name: customer_id
+        description: "Foreign key to dim_customers"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customers')
+              field: customer_id
+
+      - name: product_id
+        description: "Foreign key to dim_products"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_products')
+              field: product_id
+
+      - name: quantity
+        description: "Quantity of product ordered"
+        tests:
+          - not_null
+          - positive_value
+
+      - name: total_item_amount
+        description: "Total amount for the line item (quantity x price)"
+        tests:
+          - not_null
+          - positive_value
+
+  - name: customer_revenue
+    description: "Aggregated revenue and order count per customer"
+    columns:
+      - name: customer_id
+        description: "Unique customer identifier"
+        tests:
+          - not_null
+          - unique
+
+      - name: total_revenue
+        description: "Sum of all order amounts for the customer"
+        tests:
+          - not_null
+
+      - name: total_orders
+        description: "Count of distinct orders for the customer"
+        tests:
+          - not_null

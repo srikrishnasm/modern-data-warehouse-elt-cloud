@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  - name: raw
+    description: "Raw ingested data from CSV files"
+    schema: raw
+    tables:
+      - name: customers
+        description: "Raw customer records"
+
+      - name: orders
+        description: "Raw order records"
+
+      - name: products
+        description: "Raw product records"
+
+      - name: order_items
+        description: "Raw order item records"
+
+      - name: payments
+        description: "Raw payment records"

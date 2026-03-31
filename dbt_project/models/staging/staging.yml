@@ -1,0 +1,121 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: "Cleaned customer data from raw layer"
+    columns:
+      - name: customer_id
+        description: "Unique customer identifier"
+        tests:
+          - not_null
+          - unique
+
+      - name: email
+        description: "Customer email address"
+        tests:
+          - not_null
+          - email_format
+
+      - name: created_at
+        description: "Customer creation date"
+        tests:
+          - not_null
+
+  - name: stg_orders
+    description: "Cleaned order data from raw layer"
+    columns:
+      - name: order_id
+        description: "Unique order identifier"
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        description: "Foreign key to stg_customers"
+        tests:
+          - not_null
+
+      - name: status
+        description: "Order status"
+        tests:
+          - accepted_values:
+              values: ['pending', 'completed', 'cancelled']
+
+      - name: order_date
+        description: "Date the order was placed"
+        tests:
+          - not_null
+          - no_future_date
+
+  - name: stg_products
+    description: "Cleaned product data from raw layer"
+    columns:
+      - name: product_id
+        description: "Unique product identifier"
+        tests:
+          - not_null
+          - unique
+
+      - name: price
+        description: "Product price"
+        tests:
+          - not_null
+          - positive_value
+
+      - name: category
+        description: "Product category"
+        tests:
+          - accepted_values:
+              values: ['Electronics', 'Fashion', 'Accessories', 'Furniture', 'Stationery', 'Home Appliances']
+
+  - name: stg_order_items
+    description: "Cleaned order items from raw layer"
+    columns:
+      - name: order_item_id
+        description: "Unique order item identifier"
+        tests:
+          - not_null
+          - unique
+
+      - name: order_id
+        description: "Foreign key to stg_orders"
+        tests:
+          - not_null
+
+      - name: quantity
+        description: "Quantity ordered"
+        tests:
+          - not_null
+          - positive_value
+
+      - name: price
+        description: "Unit price at time of order"
+        tests:
+          - not_null
+          - positive_value
+
+  - name: stg_payments
+    description: "Cleaned payment data from raw layer"
+    columns:
+      - name: payment_id
+        description: "Unique payment identifier"
+        tests:
+          - not_null
+          - unique
+
+      - name: order_id
+        description: "Foreign key to stg_orders"
+        tests:
+          - not_null
+
+      - name: amount
+        description: "Payment amount"
+        tests:
+          - not_null
+          - positive_value
+
+      - name: payment_method
+        description: "Payment method used"
+        tests:
+          - accepted_values:
+              values: ['UPI', 'Credit Card', 'Debit Card']

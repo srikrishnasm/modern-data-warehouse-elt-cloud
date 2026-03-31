@@ -1,0 +1,30 @@
+# create new .gitignore
+cat > .gitignore << 'EOF'
+# credentials — never commit these
+.env
+config/.env
+*.pem
+*.key
+terraform/.terraform/
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/.terraform.lock.hcl
+
+# python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+
+# dbt
+dbt_project/target/
+dbt_project/dbt_packages/
+dbt_project/logs/
+
+# data files
+data/
+*.csv
+
+# OS
+.DS_Store
+EOF

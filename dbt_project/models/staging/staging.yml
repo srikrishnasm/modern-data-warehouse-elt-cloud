@@ -41,7 +41,8 @@ models:
           - accepted_values:
               config:
                 severity: warn
-              values: ['pending', 'completed', 'cancelled']
+              arguments:
+                values: ['pending', 'completed', 'cancelled']
 
       - name: order_date
         description: "Date the order was placed"
@@ -70,7 +71,8 @@ models:
           - accepted_values:
               config:
                 severity: warn
-              values: ['Electronics', 'Fashion', 'Accessories', 'Furniture', 'Stationery', 'Home Appliances']
+              arguments:
+                values: ['Electronics', 'Fashion', 'Accessories', 'Furniture', 'Stationery', 'Home Appliances']
 
   - name: stg_order_items
     description: "Cleaned order items from raw layer"
@@ -124,4 +126,5 @@ models:
           - accepted_values:
               config:
                 severity: warn
-              values: ['UPI', 'Credit Card', 'Debit Card']
+              arguments:
+                values: ['UPI', 'Credit Card', 'Debit Card']

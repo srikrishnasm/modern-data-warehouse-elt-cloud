@@ -54,20 +54,22 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('dim_customers')
-              field: customer_id
               config:
                 severity: warn
+              arguments:
+                to: ref('dim_customers')
+                field: customer_id
 
       - name: product_id
         description: "Foreign key to dim_products"
         tests:
           - not_null
           - relationships:
-              to: ref('dim_products')
-              field: product_id
               config:
                 severity: warn
+              arguments:
+                to: ref('dim_products')
+                field: product_id
 
       - name: quantity
         description: "Quantity of product ordered"

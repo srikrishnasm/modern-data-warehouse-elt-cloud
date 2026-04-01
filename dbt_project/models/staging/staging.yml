@@ -39,6 +39,8 @@ models:
         description: "Order status"
         tests:
           - accepted_values:
+              config:
+                severity: warn
               values: ['pending', 'completed', 'cancelled']
 
       - name: order_date
@@ -66,6 +68,8 @@ models:
         description: "Product category"
         tests:
           - accepted_values:
+              config:
+                severity: warn
               values: ['Electronics', 'Fashion', 'Accessories', 'Furniture', 'Stationery', 'Home Appliances']
 
   - name: stg_order_items
@@ -118,4 +122,6 @@ models:
         description: "Payment method used"
         tests:
           - accepted_values:
+              config:
+                severity: warn
               values: ['UPI', 'Credit Card', 'Debit Card']

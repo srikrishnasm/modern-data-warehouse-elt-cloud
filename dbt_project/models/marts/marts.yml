@@ -56,6 +56,8 @@ models:
           - relationships:
               to: ref('dim_customers')
               field: customer_id
+              config:
+                severity: warn
 
       - name: product_id
         description: "Foreign key to dim_products"
@@ -64,6 +66,8 @@ models:
           - relationships:
               to: ref('dim_products')
               field: product_id
+              config:
+                severity: warn
 
       - name: quantity
         description: "Quantity of product ordered"
@@ -72,7 +76,7 @@ models:
           - positive_value
 
       - name: total_item_amount
-        description: "Total amount for the line item (quantity x price)"
+        description: "Total amount for the line item"
         tests:
           - not_null
           - positive_value

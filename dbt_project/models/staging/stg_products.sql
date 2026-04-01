@@ -5,18 +5,12 @@ with source as (
 ),
 
 renamed as (
-
     select
         product_id,
-        initcap(trim(product_name))  as product_name,
-        initcap(trim(category))      as category,
-        price::numeric(10,2)         as price
-
+        name          as product_name,
+        category,
+        price
     from source
-    where product_id  is not null
-      and price       is not null
-      and price       > 0
-
 )
 
 select * from renamed

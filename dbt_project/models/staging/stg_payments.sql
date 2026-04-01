@@ -5,20 +5,14 @@ with source as (
 ),
 
 renamed as (
-
     select
         payment_id,
         order_id,
-        lower(trim(payment_method))  as payment_method,
-        amount::numeric(10,2)        as amount,
-        payment_date::date           as payment_date
-
+        payment_method,
+        amount,
+        payment_date,
+        status        as payment_status
     from source
-    where payment_id   is not null
-      and order_id     is not null
-      and amount       is not null
-      and amount       > 0
-
 )
 
 select * from renamed

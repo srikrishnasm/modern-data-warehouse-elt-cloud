@@ -1,20 +1,22 @@
-name: 'elt_project'
+name: 'modern_data_warehouse'
 version: '1.0.0'
-profile: 'elt_project'
+config-version: 2
 
-model-paths:  ["models"]
-macro-paths:  ["macros"]
-test-paths:   ["tests"]
+profile: 'default'
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+target-path: "target"
 clean-targets: ["target", "dbt_packages"]
 
 models:
-  elt_project:
+  modern_data_warehouse:
     staging:
-      +schema:       staging
       +materialized: view
-      +tags:         ["staging"]
-
+      +schema: STAGING
     marts:
-      +schema:       mart
       +materialized: table
-      +tags:         ["marts"]
+      fact_orders:
+        +materialized: incremental
+        +unique_key: order_id
+      +schema: MART

@@ -14,12 +14,12 @@ aggregated as (
 
     select
         o.customer_id,
-        count(distinct o.order_id)          as total_orders,
-        count(distinct o.order_item_id)     as total_items,
-        sum(o.total_item_amount)            as total_revenue,
-        avg(o.total_item_amount)            as avg_order_item_amount,
-        min(o.order_date)                   as first_order_date,
-        max(o.order_date)                   as last_order_date
+        count(distinct o.order_id)           as total_orders,
+        count(distinct o.order_item_id)      as total_items,
+        sum(o.total_item_amount)             as total_revenue,
+        avg(o.total_item_amount)             as avg_order_item_amount,
+        min(o.order_date)                    as first_order_date,
+        max(o.order_date)                    as last_order_date
 
     from orders o
     group by o.customer_id
@@ -30,27 +30,24 @@ final as (
 
     select
         c.customer_id,
-        c.first_name,
-        c.last_name,
-        c.full_name,
+        c.customer_name,
         c.email,
-        c.city,
         c.country,
         c.created_at,
 
-        coalesce(a.total_orders, 0)         as total_orders,
-        coalesce(a.total_items, 0)          as total_items,
-        coalesce(a.total_revenue, 0)        as total_revenue,
+        coalesce(a.total_orders, 0)          as total_orders,
+        coalesce(a.total_items, 0)           as total_items,
+        coalesce(a.total_revenue, 0)         as total_revenue,
         coalesce(a.avg_order_item_amount, 0) as avg_order_item_amount,
         a.first_order_date,
         a.last_order_date,
 
         case
-            when coalesce(a.total_revenue, 0) >= 100000 then 'platinum'
-            when coalesce(a.total_revenue, 0) >= 50000  then 'gold'
-            when coalesce(a.total_revenue, 0) >= 10000  then 'silver'
-            else 'bronze'
-        end                                 as customer_tier
+            when coalesce(a.total_revenue, 0) >= 100000 then 'Platinum'
+            when coalesce(a.total_revenue, 0) >= 50000  then 'Gold'
+            when coalesce(a.total_revenue, 0) >= 10000  then 'Silver'
+            else 'Bronze'
+        end                                  as customer_tier
 
     from customers c
     left join aggregated a

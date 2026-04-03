@@ -82,7 +82,7 @@ models:
         tests:
           - not_null
           - positive_value
-          
+
       - name: product_name
         description: "Product name from dim_products"
         tests:

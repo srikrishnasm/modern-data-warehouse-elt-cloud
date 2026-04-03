@@ -38,7 +38,7 @@ final as (
         coalesce(a.total_orders, 0)          as total_orders,
         coalesce(a.total_items, 0)           as total_items,
         coalesce(a.total_revenue, 0)         as total_revenue,
-        coalesce(a.avg_order_item_amount, 0) as avg_order_item_amount,
+        round(coalesce(a.avg_order_item_amount, 0), 2) as avg_order_item_amount,
         a.first_order_date,
         a.last_order_date,
 

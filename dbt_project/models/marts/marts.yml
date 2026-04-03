@@ -82,6 +82,16 @@ models:
         tests:
           - not_null
           - positive_value
+          
+      - name: product_name
+        description: "Product name from dim_products"
+        tests:
+          - not_null
+
+      - name: category
+        description: "Product category"
+        tests:
+          - not_null
 
   - name: customer_revenue
     description: "Aggregated revenue and order count per customer"

@@ -4,25 +4,22 @@
 ) }}
 
 with orders as (
-
     select * from {{ ref('stg_orders') }}
-
 ),
 
 order_items as (
-
     select * from {{ ref('stg_order_items') }}
-
 ),
 
 payments as (
-
     select * from {{ ref('stg_payments') }}
+),
 
+products as (
+    select * from {{ ref('stg_products') }}
 ),
 
 final as (
-
     select
         oi.order_item_id,
         o.order_id,
@@ -31,6 +28,9 @@ final as (
         o.status,
 
         oi.product_id,
+        pr.product_name,
+        pr.category,
+
         oi.quantity,
         oi.price                            as unit_price,
 
@@ -46,13 +46,14 @@ final as (
         on oi.order_id = o.order_id
     left join payments p
         on o.order_id = p.order_id
+    left join products pr
+        on oi.product_id = pr.product_id
 
     {% if is_incremental() %}
     where oi.order_item_id > (
         select coalesce(max(order_item_id), 0) from {{ this }}
     )
     {% endif %}
-
 )
 
 select * from final

@@ -25,7 +25,17 @@ Snowflake staging + mart schemas
 Preset.io dashboard
 ```
 
----
+This project implements a cloud-native ELT (Extract, Load, Transform) pipeline for a synthetic e-commerce dataset. The pipeline is fully orchestrated by Apache Airflow running on AWS EC2 and runs on a daily schedule.
+
+Extract — synthetic e-commerce data (customers, orders, products, payments) is generated using Python's Faker library and extracted as CSV files, then uploaded directly to Amazon S3 raw zone using boto3.
+
+Load — Apache Airflow triggers a Snowflake COPY INTO command that loads the raw CSV files from S3 into the Snowflake raw schema. This replaces the previous day's data with a full refresh on every run.
+
+Transform — dbt runs directly on EC2 and connects to Snowflake to execute two layers of transformation. The staging layer cleans and types the raw data into views. The mart layer builds dimension tables (dim_customers, dim_products), an incremental fact table (fact_orders), and a revenue aggregation table (customer_revenue) with customer tier segmentation.
+
+Visualize — Preset.io (managed Apache Superset) connects to the Snowflake mart schema and serves an interactive e-commerce analytics dashboard showing revenue by country, customer tier breakdown, orders by status, top customers, and sales by product category.
+
+The entire stack runs on free tier services — AWS S3, EC2 t3.micro, Snowflake trial credits, dbt Cloud developer tier, and Preset.io free tier — making it fully reproducible at zero cost.
 
 ## Tech stack
 
@@ -250,7 +260,7 @@ airflow dags trigger elt_pipeline
 | Airflow | http://YOUR_EC2_IP:8080 |
 | Snowflake | https://app.snowflake.com |
 | dbt Cloud | https://cloud.getdbt.com  |
-| dbt Docs  | http://13.233.168.37:8081 |
+| dbt Docs  | http://<ec2-server-ip>:8081 |
 | Preset    | https://preset.io |
 
 ---

@@ -1,0 +1,4 @@
+ec2_public_dns = "ec2-xx-xxx-xxx-xx.ap-south-1.compute.amazonaws.com"
+ec2_public_ip = "xx.xxx.xxx.xx"
+s3_bucket_arn = "arn:aws:s3:::elt-cloud-xxx-xxxxxxxxxx"
+s3_bucket_name = "elt-cloud-xxx-xxxxxxxxxx"
